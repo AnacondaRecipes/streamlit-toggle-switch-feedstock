@@ -1,0 +1,49 @@
+{% set name = "streamlit-toggle-switch" %}
+{% set version = "1.0.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/streamlit_toggle_switch-{{ version }}.tar.gz
+  sha256: 991b103cd3448b0f6507f8051777b996a17b4630956d5b6fa13344175b20e572
+
+build:
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+  # streamlit missing on s390x
+  skip: true  # [py<36 or s390x]
+
+requirements:
+  host:
+    - python
+    - pip
+    - setuptools
+    - wheel
+  run:
+    - python
+    - streamlit >=0.63
+
+test:
+  imports:
+    - streamlit_toggle
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sqlinsights/streamlit-toggle-switch
+  dev_url: https://github.com/sqlinsights/streamlit-toggle-switch
+  doc_url: https://github.com/sqlinsights/streamlit-toggle-switch/blob/main/README.md
+  summary: Creates a customizable toggle
+  description: |
+    A streamlit component to create a toggle switch with color and placement customizations.
+  license: MIT
+  license_file: LICENSE
+  license_family: MIT
+
+extra:
+  recipe-maintainers:
+    - ELundby45
